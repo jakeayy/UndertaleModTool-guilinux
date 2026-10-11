@@ -165,11 +165,22 @@ jobs:
 
     needs: [build_gui, build_gui_linux, build_cli]
     runs-on: ubuntu-latest
+    # Creating/deleting releases and tags needs write access; repositories (e.g. forks)
+    # may default GITHUB_TOKEN to read-only
+    permissions:
+      contents: write
     steps:
     - name: Download artifacts
       uses: actions/download-artifact@v8
-    - run: |
-        gh release delete nightly --cleanup-tag --yes
+    - name: Delete previous nightly release
+      # The release may not exist yet (first run in a repository), so only delete what's there.
+      # A leftover tag without a release is removed too, otherwise the new release would reuse its old commit.
+      run: |
+        if gh release view nightly > /dev/null 2>&1; then
+          gh release delete nightly --cleanup-tag --yes
+        elif gh api "repos/$GH_REPO/git/refs/tags/nightly" > /dev/null 2>&1; then
+          gh api -X DELETE "repos/$GH_REPO/git/refs/tags/nightly"
+        fi
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         GH_REPO: ${{ github.repository }}

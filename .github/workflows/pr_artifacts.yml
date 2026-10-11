@@ -12,6 +12,11 @@ jobs:
   pr_Comment:
     if: github.event.workflow_run.event == 'pull_request' && github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
+    # Repositories (e.g. forks) may default GITHUB_TOKEN to read-only, which can't comment on PRs
+    permissions:
+      actions: read
+      issues: write
+      pull-requests: write
     steps:
       - uses: actions/github-script@v9
         with:
