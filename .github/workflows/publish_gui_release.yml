@@ -52,6 +52,55 @@ jobs:
           path: GUI-${{ matrix.os }}-${{ matrix.configuration }}-isBundled-${{ matrix.bundled }}-isSingleFile-${{ matrix.singlefile }}.zip
           archive: false
   
+  build_gui_linux:
+
+    strategy:
+      fail-fast: false
+      matrix:
+        configuration: [Release]
+        bundled: [true]
+        target: [linux-x64, linux-arm64]
+        include:
+          - target: linux-x64
+            rid: linux-x64
+            output: GUI-ubuntu-latest
+          - target: linux-arm64
+            rid: linux-arm64
+            output: GUI-ubuntu-latest-arm64
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v7
+      with:
+        submodules: true
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v6
+      with:
+        dotnet-version: 10.0.x
+    - name: Restore dependencies
+      run: dotnet restore UndertaleModToolAvalonia
+    - name: Build
+      run: dotnet build UndertaleModToolAvalonia --no-restore
+    - name: Publish Linux GUI (${{ matrix.rid }})
+      run: dotnet publish UndertaleModToolAvalonia -c ${{ matrix.configuration }} -r ${{ matrix.rid }} --self-contained ${{ matrix.bundled }} -p:PublishSingleFile=false --output ${{ matrix.output }}
+    - name: Copy external files
+      run: |
+        cp ./README.md ./${{ matrix.output }}/
+        cp ./SCRIPTS.md ./${{ matrix.output }}/
+        cp ./LICENSE.txt ./${{ matrix.output }}/
+        rm -f ./${{ matrix.output }}/Underanalyzer.pdb
+    - name: Create zip for stable release Linux GUI
+      # zip (unlike 7z) keeps the executable bit on the UndertaleModTool binary
+      run: |
+        cd ./${{ matrix.output }} && zip -r -9 ../${{ matrix.output }}-${{ matrix.configuration }}-isBundled-${{ matrix.bundled }}.zip . && cd ..
+    - name: Upload artifact
+      uses: actions/upload-artifact@v7
+      with:
+          name: ${{ matrix.output }}-${{ matrix.configuration }}-isBundled-${{ matrix.bundled }}
+          path: ${{ matrix.output }}-${{ matrix.configuration }}-isBundled-${{ matrix.bundled }}.zip
+          archive: false
+
   build_cli:
 
     strategy:
