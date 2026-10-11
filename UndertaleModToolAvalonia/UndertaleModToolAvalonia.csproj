@@ -1,0 +1,44 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <OutputType>WinExe</OutputType>
+        <TargetFramework>net10.0</TargetFramework>
+        <RollForward>LatestMajor</RollForward>
+        <LangVersion>13.0</LangVersion>
+        <Nullable>disable</Nullable>
+        <AssemblyName>UndertaleModTool</AssemblyName>
+        <RootNamespace>UndertaleModToolAvalonia</RootNamespace>
+        <AssemblyVersion>0.9.2.0</AssemblyVersion>
+        <FileVersion>0.9.2.0</FileVersion>
+        <Copyright>Copyright ©  2018-2026, licensed under GPLv3</Copyright>
+        <Platforms>AnyCPU;x64</Platforms>
+        <ApplicationIcon>../UndertaleModTool/icon.ico</ApplicationIcon>
+        <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
+        <AvaloniaUseCompiledBindingsByDefault>false</AvaloniaUseCompiledBindingsByDefault>
+        <NeutralLanguage>en</NeutralLanguage>
+        <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
+        <NoWarn>1591</NoWarn>
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    </PropertyGroup>
+    <ItemGroup>
+        <PackageReference Include="Avalonia" Version="11.3.22" />
+        <PackageReference Include="Avalonia.Desktop" Version="11.3.22" />
+        <PackageReference Include="Avalonia.Themes.Fluent" Version="11.3.22" />
+        <PackageReference Include="Avalonia.Fonts.Inter" Version="11.3.22" />
+        <PackageReference Include="Avalonia.AvaloniaEdit" Version="11.4.1" />
+        <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Scripting" Version="5.9.0" />
+    </ItemGroup>
+    <ItemGroup>
+        <!-- Syntax highlighting definitions, icon and scripts are shared with the Windows (WPF) GUI -->
+        <EmbeddedResource Include="../UndertaleModTool/Resources/GML.xshd" LogicalName="GML.xshd" />
+        <EmbeddedResource Include="../UndertaleModTool/Resources/VMASM.xshd" LogicalName="VMASM.xshd" />
+        <AvaloniaResource Include="../UndertaleModTool/icon.ico" Link="Assets/icon.ico" />
+        <Content Include="../UndertaleModTool/Scripts/**" LinkBase="Scripts">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+        </Content>
+    </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\Underanalyzer\Underanalyzer\Underanalyzer.csproj" />
+        <ProjectReference Include="..\UndertaleModLib\UndertaleModLib.csproj" />
+    </ItemGroup>
+</Project>
