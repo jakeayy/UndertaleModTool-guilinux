@@ -20,7 +20,26 @@ The most complete tool for modding, decompiling and unpacking Undertale (and oth
 
 ## macOS/Linux
 
-As of writing, there is no official method of running UndertaleModTool's GUI on macOS or Linux. However, there are some options available:
+> [!IMPORTANT]
+> **This is an independent fork ([jakeayy/UndertaleModTool-guilinux](https://github.com/jakeayy/UndertaleModTool-guilinux)), not part of the official UndertaleModTool project.**
+> The Linux GUI in this fork was written with the help of AI. The original project's contribution policies don't accept AI-generated code, so this work will **never** be submitted as a pull request to [UnderminersTeam/UndertaleModTool](https://github.com/UnderminersTeam/UndertaleModTool) and is maintained separately.
+> Please don't report issues with this fork's Linux GUI to the Underminers team; open them on this fork instead.
+
+On Linux, this fork provides a cross-platform GUI (`UndertaleModToolAvalonia`), built with [Avalonia](https://avaloniaui.net/). It shares UndertaleModLib with the Windows GUI and supports the core workflows: opening and saving data files, browsing/filtering resources, editing any resource's properties, GML decompiling/compiling and assembly editing, sprite/texture/font/background viewing with PNG import/export, a room viewer (with dragging of instances and tiles), sound playback/export, code search, and running C# scripts (`.csx`), including the bundled ones.
+
+To build and run it from source (requires the [.NET 10 SDK](https://dotnet.microsoft.com/download)):
+
+```bash
+git clone --recurse-submodules https://github.com/jakeayy/UndertaleModTool-guilinux.git
+cd UndertaleModTool-guilinux
+dotnet run --project UndertaleModToolAvalonia -c Release
+```
+
+Or publish a standalone build with `dotnet publish UndertaleModToolAvalonia -c Release -r linux-x64 --self-contained true -o out`, then run `out/UndertaleModTool`. Sound playback uses `ffplay`, `mpv`, `pw-play`, `paplay` or `aplay`, whichever is installed.
+
+The GUI needs a few X11 libraries that desktop distributions normally ship, but minimal installs and WSL may lack: `libice6 libsm6 libfontconfig1` on Debian/Ubuntu (`libICE libSM fontconfig` on Fedora, `libice libsm fontconfig` on Arch). If they're missing, the tool prints which ones and how to install them.
+
+Other options (from the original project):
 - Use the CLI (command-line interface) version of the tool. This means there's no graphical interface, but it can be useful for automation and quick tasks.
 - Use a work-in-progress port of the GUI to a cross-platform framework, such as the one [currently available here](https://github.com/UnderminersTeam/UndertaleModTool/pull/2126). As of writing, this port is incomplete, but it has support for many features that are commonly used.
 - Run the tool via [Wine](https://winehq.org). This can be configured manually, or you can use an unofficial, community-maintained installer script such as [this one](https://github.com/YarTom/UndertaleModTool-linux-installer). **The Underminers team is not associated with these projects, so take care to ensure any scripts are safe before running them!**

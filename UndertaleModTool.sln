@@ -17,6 +17,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UndertaleModLibTests", "Und
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Underanalyzer", "Underanalyzer\Underanalyzer\Underanalyzer.csproj", "{A171D18F-274E-427A-AFB3-D7A161F5B9CF}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UndertaleModToolAvalonia", "UndertaleModToolAvalonia\UndertaleModToolAvalonia.csproj", "{4675CDB1-70CF-4593-A645-93E792AD0FF6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -81,6 +83,14 @@ Global
 		{A171D18F-274E-427A-AFB3-D7A161F5B9CF}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A171D18F-274E-427A-AFB3-D7A161F5B9CF}.Release|x64.ActiveCfg = Release|Any CPU
 		{A171D18F-274E-427A-AFB3-D7A161F5B9CF}.Release|x64.Build.0 = Release|Any CPU
+		{4675CDB1-70CF-4593-A645-93E792AD0FF6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4675CDB1-70CF-4593-A645-93E792AD0FF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4675CDB1-70CF-4593-A645-93E792AD0FF6}.Debug|x64.ActiveCfg = Debug|x64
+		{4675CDB1-70CF-4593-A645-93E792AD0FF6}.Debug|x64.Build.0 = Debug|x64
+		{4675CDB1-70CF-4593-A645-93E792AD0FF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4675CDB1-70CF-4593-A645-93E792AD0FF6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4675CDB1-70CF-4593-A645-93E792AD0FF6}.Release|x64.ActiveCfg = Release|x64
+		{4675CDB1-70CF-4593-A645-93E792AD0FF6}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -47,3 +47,47 @@ jobs:
       with:
         name: GUI-${{ matrix.os }}-isBundled-${{ matrix.bundled }}-isSingleFile-${{ matrix.singlefile }}
         path: ${{ matrix.os }}
+
+  publish_gui_linux:
+
+    strategy:
+      fail-fast: false
+      matrix:
+        configuration: [Debug]
+        bundled: [true, false]
+        target: [linux-x64, linux-arm64]
+        include:
+          - target: linux-x64
+            rid: linux-x64
+            output: GUI-ubuntu-latest
+          - target: linux-arm64
+            rid: linux-arm64
+            output: GUI-ubuntu-latest-arm64
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v7
+      with:
+        submodules: true
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v6
+      with:
+        dotnet-version: 10.0.x
+    - name: Restore dependencies
+      run: dotnet restore UndertaleModToolAvalonia
+    - name: Build
+      run: dotnet build UndertaleModToolAvalonia --no-restore
+    - name: Publish Linux GUI (${{ matrix.rid }})
+      run: dotnet publish UndertaleModToolAvalonia -c ${{ matrix.configuration }} -r ${{ matrix.rid }} --self-contained ${{ matrix.bundled }} -p:PublishSingleFile=false --output ${{ matrix.output }}
+    - name: Copy external files
+      run: |
+        cp ./README.md ./${{ matrix.output }}/
+        cp ./SCRIPTS.md ./${{ matrix.output }}/
+        cp ./LICENSE.txt ./${{ matrix.output }}/
+        rm -f ./${{ matrix.output }}/Underanalyzer.pdb
+    - name: Upload Linux GUI (${{ matrix.rid }})
+      uses: actions/upload-artifact@v7
+      with:
+        name: ${{ matrix.output }}-isBundled-${{ matrix.bundled }}
+        path: ${{ matrix.output }}
